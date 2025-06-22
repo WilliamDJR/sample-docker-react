@@ -17,7 +17,7 @@ jobs:
           {
             "AWSEBDockerrunVersion": "1",
             "Image": {
-              "Name": "willido/sample-app:gha",
+              "Name": "${{ secrets.DOCKER_USERNAME }}/sample-app:gha",
               "Update": "true"
             },
             "Ports": [
