@@ -11,8 +11,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create ZIP deployment package
-        run: zip -r deploy_package.zip ./  
+      - name: Create Dockerrun.aws.json
+        run: |
+          cat > Dockerrun.aws.json <<EOF
+          {
+            "AWSEBDockerrunVersion": "1",
+            "Image": {
+              "Name": "willido/sample-app:gha",
+              "Update": "true"
+            },
+            "Ports": [
+              {
+                "ContainerPort": "3000"
+              }
+            ]
+          }
+          EOF
+
+      - name: Create deployment package
+        run: zip deploy_package.zip Dockerrun.aws.json
 
       - name: Install AWS CLI
         run: |
